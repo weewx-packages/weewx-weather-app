@@ -1,26 +1,60 @@
-## WeeWXWeatherApp -- A weather app for WeeWX
+# WeeWX Weather App
 
-Unlike general weather apps, which get data from third party websites, this app gets data from weather stations connected to a server hosting output from [WeeWX](https://weewx.com).
+An Android app by OdiousApps that displays weather data hosted by a WeeWX
+station. It reads the Inigo plugin's settings and JSON outputs and offers
+weather screens, forecasts and a home-screen widget. It does not collect
+station hardware readings itself.
 
-This is a community maintained project that I do in my free time. While all efforts are taken to test everything works, in some cases things get overlooked. If you spot a problem please try to fix it and contribute where you can. If you aren't able to fix the issue, please file a bug under issues so we can track the progress and resolution of the problem.
+This repository mirrors
+[evilbunny2008/WeeWXWeatherApp](https://github.com/evilbunny2008/WeeWXWeatherApp).
+The current source declares app version 2.1.30, Android 11 or newer, and targets
+Android API 37. It is an external Android project with no WeeWX extension
+installer or catalog archive.
 
-## Contents
+## Set up the app
 
- - [Screen Shots](#screen-shots)
- - [Installation](https://github.com/evilbunny2008/WeeWXWeatherApp/wiki)
-   - [Concise Instructions](https://github.com/evilbunny2008/WeeWXWeatherApp/wiki#concise-instructions)
-   - [Expanded Installation Instructions](https://github.com/evilbunny2008/WeeWXWeatherApp/wiki#expanded-installation-instructions)
- - [License](#license)
- - [Credits](#credits)
+Install the app through the upstream
+[Google Play listing](https://play.google.com/store/apps/details?id=com.odiousapps.weewxweather),
+or build an APK from this source as described below. Store availability and
+published app versions are managed by upstream.
 
-## Screen Shots
+On the station, install and configure the separate
+[Inigo plugin](https://github.com/evilbunny2008/InigoPlugin) using that project's
+instructions. Serve its `inigo-settings.txt`, `inigo-data` JSON, `inigo-dicts`
+JSON and `inigo-last` JSON from your own web server. This app expects Inigo's
+format; an unrelated `weewx.json` report is not a substitute.
 
-<img width="300px" src="https://github.com/evilbunny2008/WeeWXWeatherApp/raw/master/screenshots/Screenshot_20181021-181146.jpg"> <img width="300px" src="https://github.com/evilbunny2008/WeeWXWeatherApp/blob/master/screenshots/Screenshot_20181021-181157.jpg"> <img width="300px" src="https://github.com/evilbunny2008/WeeWXWeatherApp/blob/master/screenshots/Screenshot_20181021-181214.jpg">
-<img width="300px" src="https://github.com/evilbunny2008/WeeWXWeatherApp/blob/master/screenshots/Screenshot_20181021-181247.jpg"><br>
+On first launch, enter your settings URL, for example
+`https://weather.example.org/weewx/inigo-settings.txt`, then save it. The settings
+file supplies the JSON addresses and station details. If those settings change,
+use the app's settings pane to download them again. Swipe down on a weather
+screen to refresh. Widget updates need background downloading enabled.
 
-## Installation
+The [upstream setup wiki](https://github.com/evilbunny2008/WeeWXWeatherApp/wiki)
+explains the settings format and app operation. Its server paths are examples;
+use the web output directory configured for your station. The Android app
+itself is installed on the phone, not with `weectl extension install`.
 
-Installation instructions have moved to [the wiki](https://github.com/evilbunny2008/WeeWXWeatherApp/wiki/home)
+## Build from source
+
+Use JDK 21 and an Android SDK containing API 37. The repository pins Gradle
+9.8.1 and Android Gradle Plugin 9.4.1. Configure your own SDK location in
+`local.properties`; the checked-in machine path is not portable.
+
+```sh
+./gradlew :app:assembleDebug
+```
+
+The debug APK is under `app/build/outputs/apk/debug`. Release builds require
+your own signing configuration; see [`scripts/signing.conf.example`](scripts/signing.conf.example)
+and [`scripts/build-signed.sh`](scripts/build-signed.sh). Do not reuse a developer's
+SDK paths or signing files. The build downloads Gradle and Maven dependencies.
+No Android build, device connection or live station was exercised for this
+README update.
+
+## Screenshots
+
+Examples of earlier app screens are in [`screenshots`](screenshots).
 
 ## License
 
