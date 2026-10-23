@@ -38,8 +38,17 @@ itself is installed on the phone, not with `weectl extension install`.
 ## Build from source
 
 Use JDK 21 and an Android SDK containing API 37. The repository pins Gradle
-9.8.1 and Android Gradle Plugin 9.4.1. Configure your own SDK location in
-`local.properties`; the checked-in machine path is not portable.
+9.8.1 and Android Gradle Plugin 9.4.1. With Git installed, first download the
+source into an empty working directory:
+
+```sh
+git clone --depth 1 https://github.com/weewx-packages/weewx-weather-app.git
+cd weewx-weather-app
+```
+
+Set `sdk.dir` in this checkout's `local.properties` to your installed Android
+SDK directory before building. The checked-in machine path is not portable.
+Then run:
 
 ```sh
 ./gradlew :app:assembleDebug
